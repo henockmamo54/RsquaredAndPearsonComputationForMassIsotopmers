@@ -1,0 +1,13 @@
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\RsquaredAndPearsonComputationForMassIsotopmers.dll.config
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\RsquaredAndPearsonComputationForMassIsotopmers.dll
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\RsquaredAndPearsonComputationForMassIsotopmers.pdb
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\obj\Debug\RsquaredAndPearsonComputationForMassIsotopmers.csproj.AssemblyReference.cache
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\obj\Debug\RsquaredAndPearsonComputationForMassIsotopmers.csproj.CoreCompileInputs.cache
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\obj\Debug\RsquaredAndPearsonComputationForMassIsotopmers.dll
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\obj\Debug\RsquaredAndPearsonComputationForMassIsotopmers.pdb
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\IsotopomerDynamics.dll
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\obj\Debug\RsquaredAndPearsonComputationForMassIsotopmers.csproj.CopyComplete
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\MathNet.Numerics.dll
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\System.ValueTuple.dll
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\MathNet.Numerics.xml
+C:\Workplace\C#\RsquaredAndPearsonComputationForMassIsotopmers\bin\Debug\System.ValueTuple.xml
