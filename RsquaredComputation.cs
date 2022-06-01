@@ -18,9 +18,9 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
         }
 
         public List<double> computation(float[] fTheoreticalIsotopes, List<float> fTimeCourse, float szNEH,
-            Object fScaleTime, Object fBodyWaterEnrichment, Object TimeCourseIsotopeCluster,
+            float fScaleTime, Object fBodyWaterEnrichment, Object TimeCourseIsotopeCluster,
             Object aTimePointsForThisPeptde, string szRateFile, float Rateconst, float new_RMSE)
-        { 
+        {
             List<List<float>> experimentslist = (List<List<float>>)TimeCourseIsotopeCluster;
             List<ExperimentRecord> experiments = new List<ExperimentRecord>();
             var temp_fBodyWaterEnrichment = ((List<float>)fBodyWaterEnrichment);
@@ -28,6 +28,7 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
                 fTheoreticalIsotopes[2] + fTheoreticalIsotopes[3] + fTheoreticalIsotopes[4] + fTheoreticalIsotopes[5]);
 
             float final_BWE = temp_fBodyWaterEnrichment[temp_fBodyWaterEnrichment.Count - 1];
+            fScaleTime = 1;
 
             for (int i = 0; i < experimentslist.Count; i++)
             {
@@ -38,7 +39,7 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
                 er.I3 = experimentslist[i][3];
                 er.I4 = experimentslist[i][4];
                 er.I5 = experimentslist[i][5];
-                er.ExperimentTime = fTimeCourse[i] / (double)fScaleTime;
+                er.ExperimentTime = fTimeCourse[i];// (double)fScaleTime;
                 er.Deuteriumenrichment = temp_fBodyWaterEnrichment[i];
                 experiments.Add(er);
             }
@@ -121,8 +122,12 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
                     }
                 }
 
-                var correlation_old = Correlation.Pearson(temp[0], temp[1]);
-                var correlation = Correlation.Pearson(temp[2], temp[1]);
+                var _correlation_old = Correlation.Pearson(temp[0], temp[1]);
+                var _correlation = Correlation.Pearson(temp[2], temp[1]);
+
+                var correlation_old = PearsonCorrelation(temp[0], temp[1]);
+                var correlation = PearsonCorrelation(temp[2], temp[1]);
+
                 new_RMSE = (float)computeRMSE(temp[2], temp[1]);
 
 
@@ -140,6 +145,47 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
 
             return double.NaN;
         }
+
+        public double PearsonCorrelation(List<double> FirstArr, List<double> SecondArr)
+        {
+            double fMean1, fMean2, ftemp, fsquare1, fsquare2;
+            int nPoints = FirstArr.Count;
+            int k;
+
+
+
+            fMean1 = fMean2 = ftemp = 0;
+
+            for (k = 0; k < nPoints; k++)
+            {
+                fMean1 = fMean1 + FirstArr[k];
+
+                fMean2 = fMean2 + SecondArr[k];
+            }
+
+            fMean1 = fMean1 / (float)nPoints;
+
+            fMean2 = fMean2 / (float)nPoints;
+
+            fsquare1 = fsquare2 = 0;
+
+            for (k = 0; k < nPoints; k++)
+            {
+                fsquare1 = fsquare1 + (fMean1 - FirstArr[k]) * (fMean1 - FirstArr[k]);
+
+                fsquare2 = fsquare2 + (fMean2 - SecondArr[k]) * (fMean2 - SecondArr[k]);
+
+                ftemp = ftemp + (fMean1 - FirstArr[k]) * (fMean2 - SecondArr[k]);
+            }
+
+            if (fsquare1 < 0.00000001 || fsquare2 < 0.00000001)
+                return -2.0f;
+
+            ftemp = ftemp / Math.Sqrt(fsquare1 * fsquare2);
+
+            return ftemp;
+        }
+
         public double computeRsquared(List<double> experimentalValue, List<double> fitvalue)
         {
             var mean_exp = experimentalValue.Where(x => !double.IsNaN(x)).Average();
