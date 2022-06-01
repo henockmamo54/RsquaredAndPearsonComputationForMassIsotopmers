@@ -18,7 +18,7 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
         }
 
         public List<double> computation(float[] fTheoreticalIsotopes, List<float> fTimeCourse, float szNEH,
-            float fScaleTime, Object fBodyWaterEnrichment, Object TimeCourseIsotopeCluster,
+            Object fBodyWaterEnrichment, Object TimeCourseIsotopeCluster,
             Object aTimePointsForThisPeptde, string szRateFile, float Rateconst, float new_RMSE)
         {
             List<List<float>> experimentslist = (List<List<float>>)TimeCourseIsotopeCluster;
@@ -28,7 +28,7 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
                 fTheoreticalIsotopes[2] + fTheoreticalIsotopes[3] + fTheoreticalIsotopes[4] + fTheoreticalIsotopes[5]);
 
             float final_BWE = temp_fBodyWaterEnrichment[temp_fBodyWaterEnrichment.Count - 1];
-            fScaleTime = 1;
+
 
             for (int i = 0; i < experimentslist.Count; i++)
             {
@@ -49,9 +49,9 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
             var RIAvalues = computeRIAPerExperiment(experiments);
             var normalizedValues = normalizeRIAValuesForAllPeptides(RIAvalues, M0, final_BWE, szNEH, temp_fBodyWaterEnrichment);
 
-            List<RIA> mergedRIAvalues = mergeMultipleRIAPerDay2(normalizedValues, fTimeCourse, (double)fScaleTime);
+            List<RIA> mergedRIAvalues = mergeMultipleRIAPerDay2(normalizedValues, fTimeCourse);
 
-            List<TheoreticalI0Value> theoreticalI0Values = computeTheoreticalCurvePoints(fTimeCourse, final_BWE, Rateconst, M0, szNEH, (double)fScaleTime);
+            List<TheoreticalI0Value> theoreticalI0Values = computeTheoreticalCurvePoints(fTimeCourse, final_BWE, Rateconst, M0, szNEH);
 
             double newPearsonCorrval = computreNewPearsonCorrlationValue(mergedRIAvalues.Select(x => x.I0_t_fromA1A0).ToList(),
                              mergedRIAvalues.Select(x => x.I0_t_fromA2A0).ToList(),
@@ -232,8 +232,8 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
             return RMSE_value;
         }
 
-        public List<TheoreticalI0Value> computeTheoreticalCurvePoints(List<float> fTimeCourse, float final_BWE, float Rateconst,
-            float M0, float NEH, double fScaleTime)
+        public List<TheoreticalI0Value> computeTheoreticalCurvePoints(List<float> fTimeCourse, float final_BWE,
+            float Rateconst, float M0, float NEH)
         {
             List<TheoreticalI0Value> theoreticalI0Values = new List<TheoreticalI0Value>();
             try
@@ -248,7 +248,7 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
 
 
                     List<double> mytimelist = new List<double>();
-                    var experiment_time = fTimeCourse.Select(x => x / fScaleTime).Distinct().ToList();
+                    var experiment_time = fTimeCourse.Select(x => x).Distinct().ToList();
 
                     foreach (double t in experiment_time)
                     {
@@ -282,11 +282,11 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
             return theoreticalI0Values;
         }
 
-        public List<RIA> mergeMultipleRIAPerDay2(List<RIA> RIAvalues, List<float> fTimeCourse, double fScaleTime)
+        public List<RIA> mergeMultipleRIAPerDay2(List<RIA> RIAvalues, List<float> fTimeCourse)
         {
             List<RIA> temp_RIAvalues = RIAvalues;
             List<RIA> mergedRIAvalues = new List<RIA>();
-            var distincttime = fTimeCourse.Select(x => x / fScaleTime).Distinct().ToList();
+            var distincttime = fTimeCourse.Select(x => x).Distinct().ToList();
             foreach (float t in distincttime)
             {
                 List<RIA> temp_RIAvalues_pertime = temp_RIAvalues.Where(x => Math.Abs(x.Time - t) <= 0.001).ToList();
