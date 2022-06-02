@@ -4,8 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using IsotopomerDynamics;
-using MathNet.Numerics.Statistics;
+using IsotopomerDynamics; 
 
 namespace RsquaredAndPearsonComputationForMassIsotopmers
 {
@@ -122,8 +121,8 @@ namespace RsquaredAndPearsonComputationForMassIsotopmers
                     }
                 }
 
-                var _correlation_old = Correlation.Pearson(temp[0], temp[1]);
-                var _correlation = Correlation.Pearson(temp[2], temp[1]);
+                //var _correlation_old = Correlation.Pearson(temp[0], temp[1]);
+                //var _correlation = Correlation.Pearson(temp[2], temp[1]);
 
                 var correlation_old = PearsonCorrelation(temp[0], temp[1]);
                 var correlation = PearsonCorrelation(temp[2], temp[1]);
